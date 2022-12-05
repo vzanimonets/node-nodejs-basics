@@ -19,16 +19,14 @@ const isExist = (path) => {
 const rename = async () => {
     const filename = fileURLToPath(import.meta.url)
     const __dirname = path.dirname(filename);
-    const wFile = path.join(__dirname, path.sep, FILES_FOLDER, path.sep, W_FILE)
-    const pFile = path.join(__dirname, path.sep, FILES_FOLDER, path.sep, P_FILE)
+    const wFile = path.join(__dirname, FILES_FOLDER, W_FILE)
+    const pFile = path.join(__dirname, FILES_FOLDER, P_FILE)
 
     try {
         const isExistW = await isExist(wFile)
         const isExistP = await isExist(pFile)
         if (isExistW && !isExistP) {
-            fs.rename(wFile, pFile, (err) => {
-                if (err) throw ERROR_MESSAGE
-            })
+            await fs.rename(wFile, pFile)
         } else {
             throw ERROR_MESSAGE
         }
